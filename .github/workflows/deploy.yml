@@ -25,7 +25,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Deploy to Server
-        run: |
-          echo "Deploying to the server..."
-          # Add deployment commands here (e.g., SSH, FTP, Docker, etc.)
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build  # This is the directory created by 'npm run build'
