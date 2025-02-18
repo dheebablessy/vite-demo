@@ -3,39 +3,29 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # Runs on push to the main branch
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Run Tests (if test script exists)
-        run: npm run test || echo "Skipping tests"
 
       - name: Build Project
         run: npm run build
 
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-
+    needs: build
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Deploy to Server
         run: |
-          echo "Deploying application..."
-          # Add deployment steps here
+          echo "Deploying to the server..."
+          # Add deployment commands here (e.g., SSH, FTP, Docker, etc.)
